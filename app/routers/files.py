@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-import pickle
+import json
 
 router = APIRouter()
 
@@ -10,8 +10,7 @@ async def get_file(filename: str):
         content = f.read()
     return {"content": content}
 
-# Vulnerability 6: Insecure deserialization
 @router.post("/load")
 async def load_data(data: str):
-    obj = pickle.loads(data.encode('latin1'))
+    obj = json.loads(data)
     return {"loaded": str(obj)}
